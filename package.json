@@ -1,0 +1,31 @@
+{
+  "name": "hapi-sspi",
+  "version": "0.1.0",
+  "description": "Hapi sspi plugin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sspi",
+    "hapi",
+    "plugin",
+    "kerberos",
+    "windows",
+    "ntlm",
+    "authentication",
+    "auth"
+  ],
+  "author": "Nathan Fritz",
+  "license": "MIT",
+  "dependencies": {
+    "boom": "^3.0.0",
+    "hapi": "^11.1.2",
+    "node-sspi": "^0.1.12",
+    "nopt": "^3.0.6",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "express": "^4.13.3"
+  }
+}
