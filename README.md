@@ -64,3 +64,7 @@ You can set the options upon registration and/or setting of the strategy. The va
 ## Notes
 
 This will only work in Windows as restricted by node-sspi.
+
+## License
+
+MIT as provided in LICENSE file
