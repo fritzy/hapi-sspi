@@ -1,7 +1,7 @@
 'use strict';
 
 const Boom = require('boom');
-const _ = require('underscore');
+const _ = require('lodash');
 
 const internals = {};
 let baseOptions = {};

@@ -21,10 +21,11 @@
   "dependencies": {
     "boom": "^3.0.0",
     "hapi": "^11.1.2",
+    "lodash": "^3.10.1",
     "node-sspi": "^0.1.12",
-    "nopt": "^3.0.6",
-    "underscore": "^1.8.3"
+    "nopt": "^3.0.6"
   },
+  "repository": "git@github.com:fritzy/hapi-sspi.git",
   "devDependencies": {
     "express": "^4.13.3"
   }
