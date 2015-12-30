@@ -41,13 +41,13 @@ internals.implementation = function (server, runOptions) {
           if (typeof options.validate === 'function') {
             options.validate(request, credentials, (err, isValid, credentials) => {
                 if (err) {
-                  throw Boom.badImplementation(err);
+                  return reply(Boom.badImplementation(err));
                 }
                 if (!isValid) {
-                  throw Boom.forbidden("You do not have access to this resource");
+                  return reply(Boom.forbidden("You do not have access to this resource"));
                 }
                 if (typeof credentials !== 'object') {
-                  throw Boom.badImplementation("validate function did not return an object");
+                  return reply(Boom.badImplementation("validate function did not return an object"));
                 }
                 reply.continue({credentials});
             });
