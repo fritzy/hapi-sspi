@@ -18,6 +18,9 @@
   ],
   "author": "Nathan Fritz",
   "license": "MIT",
+  "os": [
+    "win32"
+  ],
   "dependencies": {
     "boom": "^3.0.0",
     "hapi": "^11.1.2",
