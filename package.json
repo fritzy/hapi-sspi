@@ -22,7 +22,7 @@
     "boom": "^3.0.0",
     "hapi": "^11.1.2",
     "lodash": "^3.10.1",
-    "node-sspi": "^0.1.12",
+    "node-sspi": "^0.2.1",
     "nopt": "^3.0.6"
   },
   "repository": "git@github.com:fritzy/hapi-sspi.git",
