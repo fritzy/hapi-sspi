@@ -8,49 +8,48 @@ Implements Windows SSPI authentication for Hapi.
 'use strict';
 const hapi = require('hapi');
 
-const server = new hapi.Server();
-server.connection({
+const server = new hapi.Server({
   port: 3001
 });
 
-function validate(request, credentials, callback) {
+async function validate(request, credentials) {
   if (credentials.user && credentials.userGroups) {
-    callback(null, true, credentials);
-  } else {
-    callback(null, false);
+    return {credentials, isValid: true};
   }
+
+  return {credentials: null, isValid: false};
 }
 
-server.register([
-  {
-    register: require('hapi-sspi'),
-    options: {
+async function start() {
+  await server.register([
+    {
+      plugin: require('./'),
+      options: {
         authoritative: true,
         retrieveGroups: true,
         offerBasic: false,
         perRequestAuth: false
       }
-  }
-], (err) => {
+    }
+  ]);
+
   server.auth.strategy('windows', 'sspi', {validate});
 
   server.route({
     method: 'GET',
     path: '/',
-    handler: function (req, reply) {
-      reply({auth: req.auth});
+    handler: function (req) {
+      return {auth: req.auth};
     },
     config: {
       auth: 'windows'
     }
   });
 
-  if (err) throw err;
-  server.start((err) => {
-    if (err) throw err;
-  });
- 
-});
+  await server.start();
+}
+
+start();
 ```
 
 ## Options
