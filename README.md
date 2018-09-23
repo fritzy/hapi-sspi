@@ -1,5 +1,7 @@
 # Hapi-SSPI
 
+**Looking for new maintainer**
+
 Implements Windows SSPI authentication for Hapi.
 
 ## Example
