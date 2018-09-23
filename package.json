@@ -19,6 +19,9 @@
   "author": "Nathan Fritz",
   "license": "MIT",
   "repository": "git@github.com:fritzy/hapi-sspi.git",
+  "os": [
+    "win32"
+  ],
   "dependencies": {
     "boom": "^7.2.0",
     "node-sspi": "^0.2.3"
