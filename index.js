@@ -1,19 +1,19 @@
-'use strict';
+"use strict";
 
-const Boom = require('boom');
+const Boom = require("@hapi/boom");
 
 const internals = {};
 
 exports.plugin = {
-  pkg: require('./package.json'),
-  register: function (server) {
-    server.auth.scheme('sspi', internals.implementation);
+  pkg: require("./package.json"),
+  register: function(server) {
+    server.auth.scheme("sspi", internals.implementation);
   }
 };
 
-internals.implementation = function (server, runOptions) {
+internals.implementation = function(server, runOptions) {
   return {
-    authenticate: async function (request, h) {
+    authenticate: async function(request, h) {
       const req = request.raw.req;
       const res = request.raw.res;
       const options = {
@@ -22,11 +22,11 @@ internals.implementation = function (server, runOptions) {
         ...runOptions
       };
 
-      const nodeSSPI = require('node-sspi');
+      const nodeSSPI = require("node-sspi");
       const nodeSSPIObj = new nodeSSPI(options);
 
       return new Promise((resolve, reject) => {
-        nodeSSPIObj.authenticate(req, res, async function (sspiError) {
+        nodeSSPIObj.authenticate(req, res, async function(sspiError) {
           if (sspiError) {
             return reject(Boom.badImplementation(sspiError));
           }
@@ -37,27 +37,35 @@ internals.implementation = function (server, runOptions) {
               userGroups: req.connection.userGroups
             };
 
-            if (typeof options.validate === 'function') {
-              const {err, isValid, credentials} = await options.validate(request, baseCredentials);
+            if (typeof options.validate === "function") {
+              const { err, isValid, credentials } = await options.validate(
+                request,
+                baseCredentials
+              );
 
               if (err) {
                 return reject(Boom.badImplementation(err));
               }
               if (!isValid) {
-                return reject(Boom.forbidden("You do not have access to this resource"));
+                return reject(
+                  Boom.forbidden("You do not have access to this resource")
+                );
               }
-              if (typeof credentials !== 'object') {
-                return reject(Boom.badImplementation("validate function did not return an object"));
+              if (typeof credentials !== "object") {
+                return reject(
+                  Boom.badImplementation(
+                    "validate function did not return an object"
+                  )
+                );
               }
 
-              return resolve(h.authenticated({credentials}));
+              return resolve(h.authenticated({ credentials }));
             }
 
-            resolve(h.authenticated({credentials: baseCredentials}));
+            resolve(h.authenticated({ credentials: baseCredentials }));
           }
         });
       });
     }
   };
 };
-

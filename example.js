@@ -1,5 +1,5 @@
-'use strict';
-const hapi = require('hapi');
+"use strict";
+const hapi = require("@hapi/hapi");
 
 const server = new hapi.Server({
   port: 3001
@@ -7,16 +7,16 @@ const server = new hapi.Server({
 
 async function validate(request, credentials) {
   if (credentials.user && credentials.userGroups) {
-    return {credentials, isValid: true};
+    return { credentials, isValid: true };
   }
 
-  return {credentials: null, isValid: false};
+  return { credentials: null, isValid: false };
 }
 
 async function start() {
   await server.register([
     {
-      plugin: require('./'),
+      plugin: require("./"),
       options: {
         authoritative: true,
         retrieveGroups: true,
@@ -26,16 +26,16 @@ async function start() {
     }
   ]);
 
-  server.auth.strategy('windows', 'sspi', {validate});
+  server.auth.strategy("windows", "sspi", { validate });
 
   server.route({
-    method: 'GET',
-    path: '/',
-    handler: function (req) {
-      return {auth: req.auth};
+    method: "GET",
+    path: "/",
+    handler: function(req) {
+      return { auth: req.auth };
     },
     config: {
-      auth: 'windows'
+      auth: "windows"
     }
   });
 
